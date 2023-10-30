@@ -4,7 +4,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import { NavLink, useNavigate } from "react-router-dom";
 import configs from "../../configs";
 import useScroll from "../../hooks/useScroll";
-import { Box, Tooltip, Typography } from "@mui/material";
+import {
+    Avatar,
+    Badge,
+    Box,
+    Stack,
+    Tooltip,
+    Typography,
+    styled,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 
 // import { useSelector } from "react-redux";
@@ -39,6 +47,35 @@ const Header = ({ scroll }: HeaderProps) => {
     const handleClick = () => {
         navigate(configs.routes.login);
     };
+
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+        "& .MuiBadge-badge": {
+            backgroundColor: "#1ffadf",
+            color: "#1ffadf",
+            boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+            "&::after": {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+                animation: "ripple 1.2s infinite ease-in-out",
+                border: "1px solid currentColor",
+                content: '""',
+            },
+        },
+        "@keyframes ripple": {
+            "0%": {
+                transform: "scale(.8)",
+                opacity: 1,
+            },
+            "100%": {
+                transform: "scale(2.4)",
+                opacity: 0,
+            },
+        },
+    }));
 
     return (
         <St.StyledAppBar
@@ -87,13 +124,29 @@ const Header = ({ scroll }: HeaderProps) => {
                     </Box>
                     {user ? (
                         <Tooltip title={<TooltipCus />}>
-                            <Box className="header__avatar">
-                                <img
-                                    className="header__avatar-image"
-                                    src={user.picture}
-                                    alt=""
-                                />
-                            </Box>
+                            <Stack
+                                style={{ cursor: "pointer" }}
+                                direction="row"
+                                spacing={2}
+                            >
+                                <StyledBadge
+                                    overlap="circular"
+                                    anchorOrigin={{
+                                        vertical: "bottom",
+                                        horizontal: "right",
+                                    }}
+                                    variant="dot"
+                                >
+                                    {/* <Box className="header__avatar">
+                                        <img
+                                            className="header__avatar-image"
+                                            src={user.picture}
+                                            alt=""
+                                        />
+                                    </Box> */}
+                                    <Avatar src={user.picture} />
+                                </StyledBadge>
+                            </Stack>
                         </Tooltip>
                     ) : (
                         <Box onClick={handleClick} className="login">
