@@ -11,6 +11,7 @@ import Dashboard from "../pages/Dashboard";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Add from "../pages/Add";
 import Edit from "../pages/Edit";
+import NotFound from "../pages/NotFound";
 
 const homeRoutes = [
     {
@@ -54,6 +55,12 @@ const homeRoutes = [
         path: configs.routes.edit,
         component: Edit,
         layout: DashboardLayout,
+    },
+    {
+        id: 8,
+        path: configs.routes.notFound,
+        component: NotFound,
+        layout: null,
     },
 ];
 

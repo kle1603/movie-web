@@ -8,6 +8,7 @@ const routes = {
     dashboard: "/dashboard",
     add: "/dashboard/add",
     edit: "/dashboard/edit/:id",
+    notFound: "/*",
 };
 
 export default routes;
