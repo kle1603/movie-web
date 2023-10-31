@@ -8,12 +8,6 @@ export const BoxStyled = styled(Box)`
     }
 
     .MuiSkeleton-root {
-        display: block;
-        background-color: rgba(141, 141, 141, 0.11);
-        height: 1.2em;
-        border-radius: 4px;
-        position: relative;
-        overflow: hidden;
-        -webkit-mask-image: -webkit-radial-gradient(white, black);
+        background-color: rgba(150, 150, 150, 0.11);
     }
 `;

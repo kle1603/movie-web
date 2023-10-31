@@ -9,6 +9,10 @@ export const StyledDiv = styled.div`
         object-fit: cover;
     }
 
+    .MuiSkeleton-root {
+        background-color: rgba(150, 150, 150, 0.11);
+    }
+
     .content {
         position: absolute;
         top: 90%;
@@ -24,7 +28,7 @@ export const StyledDiv = styled.div`
         color: rgba(255, 255, 255, 0.8);
 
         .content__image-wrapper {
-            /* margin-bottom: 20px; */
+            margin-bottom: 20px;
             min-width: 340px;
             height: 110px;
             overflow: hidden;
@@ -32,7 +36,7 @@ export const StyledDiv = styled.div`
             .content__image {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: contain;
             }
         }
 

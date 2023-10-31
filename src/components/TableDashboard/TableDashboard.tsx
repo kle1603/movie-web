@@ -13,6 +13,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    Skeleton,
 } from "@mui/material";
 import * as St from "./TableDashboard.styled";
 import { useEffect, useState } from "react";
@@ -36,6 +37,7 @@ const TableDashboard = () => {
     const [selectedMovie, setSelectedMovie] = useState<
         TableDashboardProps | undefined
     >();
+    const [loading, setLoading] = useState(true);
 
     const handleOpen = (movie: TableDashboardProps) => {
         console.log(movie);
@@ -48,10 +50,12 @@ const TableDashboard = () => {
     };
 
     useEffect(() => {
+        setLoading(true);
         (async () => {
             const { data } = await getAllMovie("Movie");
 
             setMovies(data);
+            setLoading(false);
         })();
     }, []);
 
@@ -85,111 +89,134 @@ const TableDashboard = () => {
                     </Typography>
                 </Button>
             </Box>
-            <Paper className="table-wrapper">
-                <TableContainer>
-                    <Table className="table">
-                        <TableHead className="table-header">
-                            <TableRow>
-                                <TableCell className="col id-col" align="left">
-                                    <Typography>Id</Typography>
-                                </TableCell>
-                                <TableCell
-                                    className="col name-col"
-                                    align="left"
-                                >
-                                    <Typography>Name</Typography>
-                                </TableCell>
-                                <TableCell
-                                    className="col desc-col"
-                                    align="left"
-                                >
-                                    <Typography>Description</Typography>
-                                </TableCell>
-                                <TableCell
-                                    className="col image-col"
-                                    align="left"
-                                >
-                                    <Typography>Image</Typography>
-                                </TableCell>
-                                <TableCell
-                                    className="col action-col"
-                                    align="left"
-                                >
-                                    <Typography>Action</Typography>
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody className="table-body">
-                            {movies.map((movie) => (
-                                <TableRow key={movie.id}>
-                                    <TableCell className="id" align="left">
-                                        <Typography>{movie.id}</Typography>
+            {loading ? (
+                <Skeleton variant="rounded" animation="wave" height={450} />
+            ) : (
+                <Paper className="table-wrapper">
+                    <TableContainer>
+                        <Table className="table">
+                            <TableHead className="table-header">
+                                <TableRow>
+                                    <TableCell
+                                        className="col id-col"
+                                        align="left"
+                                    >
+                                        <Typography>Id</Typography>
                                     </TableCell>
-                                    <TableCell className="name" align="left">
-                                        <Typography>{movie.name}</Typography>
+                                    <TableCell
+                                        className="col name-col"
+                                        align="left"
+                                    >
+                                        <Typography>Name</Typography>
                                     </TableCell>
-                                    <TableCell className="desc" align="left">
-                                        <Typography>
-                                            {movie.description}
-                                        </Typography>
+                                    <TableCell
+                                        className="col desc-col"
+                                        align="left"
+                                    >
+                                        <Typography>Description</Typography>
                                     </TableCell>
-                                    <TableCell className="image">
-                                        <Box className="image-wrapper">
-                                            <img
-                                                className="image"
-                                                src={movie.image}
-                                                alt={movie.name}
-                                            />
-                                        </Box>
+                                    <TableCell
+                                        className="col image-col"
+                                        align="left"
+                                    >
+                                        <Typography>Image</Typography>
                                     </TableCell>
-                                    <TableCell className="action" align="left">
-                                        <Box>
-                                            <IconButton
-                                                onClick={() =>
-                                                    handleEdit(movie.id)
-                                                }
-                                                className="icon-wrapper"
-                                            >
-                                                <AiOutlineEdit className="icon" />
-                                            </IconButton>{" "}
-                                            <IconButton
-                                                onClick={() =>
-                                                    handleOpen(movie)
-                                                }
-                                                className="icon-wrapper"
-                                            >
-                                                <AiOutlineDelete className="icon" />
-                                            </IconButton>
-                                        </Box>
+                                    <TableCell
+                                        className="col action-col"
+                                        align="left"
+                                    >
+                                        <Typography>Action</Typography>
                                     </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <St.DialogStyled
-                    fullWidth={true}
-                    onClose={handleClose}
-                    open={open}
-                >
-                    <DialogTitle>Confirmation</DialogTitle>
-                    <DialogContent>
-                        Are you sure to delete {selectedMovie?.name}?
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose} className="dialog-cancel">Cancel</Button>
-                        <Button
-                            className="dialog-ok"
-                            onClick={() =>
-                                selectedMovie?.id &&
-                                handleDelete(selectedMovie.id)
-                            }
-                        >
-                            Ok
-                        </Button>
-                    </DialogActions>
-                </St.DialogStyled>
-            </Paper>
+                            </TableHead>
+                            <TableBody className="table-body">
+                                {movies.map((movie) => (
+                                    <TableRow key={movie.id}>
+                                        <TableCell className="id" align="left">
+                                            <Typography>{movie.id}</Typography>
+                                        </TableCell>
+                                        <TableCell
+                                            className="name"
+                                            align="left"
+                                        >
+                                            <Typography>
+                                                {movie.name}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell
+                                            className="desc"
+                                            align="left"
+                                        >
+                                            <Typography>
+                                                {movie.description}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell className="image">
+                                            <Box className="image-wrapper">
+                                                <img
+                                                    className="image"
+                                                    src={movie.image}
+                                                    alt={movie.name}
+                                                />
+                                            </Box>
+                                        </TableCell>
+                                        <TableCell
+                                            className="action"
+                                            align="left"
+                                        >
+                                            <Box>
+                                                <IconButton
+                                                    onClick={() =>
+                                                        handleEdit(movie.id)
+                                                    }
+                                                    className="icon-wrapper"
+                                                >
+                                                    <AiOutlineEdit className="icon" />
+                                                </IconButton>{" "}
+                                                <IconButton
+                                                    onClick={() =>
+                                                        handleOpen(movie)
+                                                    }
+                                                    className="icon-wrapper"
+                                                >
+                                                    <AiOutlineDelete className="icon" />
+                                                </IconButton>
+                                            </Box>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <St.DialogStyled
+                        fullWidth={true}
+                        onClose={handleClose}
+                        open={open}
+                    >
+                        <DialogTitle>Confirmation</DialogTitle>
+                        <DialogContent>
+                            Are you sure to delete {selectedMovie?.name}?
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                onClick={handleClose}
+                                className="dialog-cancel"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                className="dialog-ok"
+                                onClick={() =>
+                                    selectedMovie?.id &&
+                                    handleDelete(selectedMovie.id)
+                                }
+                            >
+                                Ok
+                            </Button>
+                        </DialogActions>
+                    </St.DialogStyled>
+                </Paper>
+            )}
         </St.DivStyled>
     );
 };

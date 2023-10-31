@@ -26,7 +26,7 @@ const Slider = ({ time, link, index }: SliderProps) => {
         (async () => {
             const { data } = await getAllMovie("Movie");
             setMovies(data);
-            setLoading(true);
+            setLoading(false);
         })();
     }, []);
 

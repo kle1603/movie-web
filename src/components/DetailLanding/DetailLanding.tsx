@@ -6,7 +6,7 @@ import ReplyIcon from "@mui/icons-material/Reply";
 import * as St from "./DetailLanding.styled";
 import watchlist from "../../assets/icons/watchlist.png";
 import play from "../../assets/icons/play.png";
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Video from "../Video";
 import { getMovieById } from "../../utils/movieApi";
@@ -25,6 +25,7 @@ interface Movie {
 const DetailLanding = ({ id }: DetailLandingProps) => {
     const [open, setOpen] = useState(false);
     const handleModal = () => setOpen(!open);
+    const [loading, setLoading] = useState(true);
 
     const [movie, setMovie] = useState<Movie>({
         id: "",
@@ -34,19 +35,43 @@ const DetailLanding = ({ id }: DetailLandingProps) => {
     });
 
     useEffect(() => {
+        setLoading(true);
         (async () => {
             const { data } = await getMovieById("Movie", Number(id));
             setMovie(data);
+            setLoading(false);
         })();
     }, [id]);
 
     return (
         <St.StyledDiv>
-            <img className="background" src={movie.background} alt="" />
+            {loading ? (
+                <Skeleton
+                    className="background"
+                    variant="rounded"
+                    animation="wave"
+                />
+            ) : (
+                <img className="background" src={movie.background} alt="" />
+            )}
+
             <Box className="content">
-                <Box className="content__image-wrapper">
-                    <img className="content__image" src={movie.logo} alt="" />
-                </Box>
+                {loading ? (
+                    <Skeleton
+                        className="content__image-wrapper"
+                        variant="rounded"
+                        animation="wave"
+                    />
+                ) : (
+                    <Box className="content__image-wrapper">
+                        <img
+                            className="content__image"
+                            src={movie.logo}
+                            alt=""
+                        />
+                    </Box>
+                )}
+
                 <Box className="content__title">
                     <Typography className="content__title-item">
                         CBFC:U/A

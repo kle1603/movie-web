@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 
 export const BoxStyled = styled(Box)`
-    height: calc(100vh - 90px);
+    /* height: calc(100vh - 90px); */
+    margin-top: 60px;
+    margin-bottom: 60px;
 
     width: 1340px;
     margin-left: auto;
