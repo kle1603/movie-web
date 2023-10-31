@@ -10,6 +10,8 @@ export const BoxStyled = styled(Box)`
     background-size: cover;
 
     .inner {
+        margin-top: 90px;
+
         display: flex;
         justify-content: center;
         align-items: center;

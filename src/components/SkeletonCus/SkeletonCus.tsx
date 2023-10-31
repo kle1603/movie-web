@@ -4,7 +4,7 @@ import * as St from "./SkeletonCus.styled";
 const SkeletonCus = () => {
     return (
         <St.BoxStyled>
-            <Skeleton height={172}  />
+            <Skeleton variant="rounded" animation="wave" height={172} />
         </St.BoxStyled>
     );
 };
